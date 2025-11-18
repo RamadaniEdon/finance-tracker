@@ -1,0 +1,20 @@
+{
+    "language": "Shqip",
+    "common": {
+        "ok": "Ne rregull",
+        "cancel": "Anulo",
+        "save": "Ruaj",
+        "delete": "Fshij",
+        "error": "Gabim"
+    },
+    "auth": {
+        "login": {
+            "title": "Kyqu",
+            "description": "Sheno kredencialet",
+            "actions": {
+                "login": "Kyqu",
+                "need_account": "Nuk keni llogari?"
+            }
+        }
+    }
+}

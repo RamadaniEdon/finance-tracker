@@ -1,0 +1,20 @@
+{
+    "language": "English",
+    "common": {
+        "ok": "OK",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "error": "Error"
+    },
+    "auth": {
+        "login": {
+            "title": "Login",
+            "description": "Enter your credentials",
+            "actions": {
+                "login": "Login",
+                "need_account": "Need an account?"
+            }
+        }
+    }
+}

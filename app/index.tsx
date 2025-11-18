@@ -1,14 +1,18 @@
 import { useTheme } from '@/hooks/useTheme';
-import { useRouter } from 'expo-router';
+import { useTranslations } from '@/hooks/useTranslations';
 import { Button, Text, View } from 'react-native';
 
 export default function Index() {
     const theme = useTheme();
-    const router = useRouter();
+    const { languageChoice, setLanguageChoice, translations } = useTranslations();
     return (
         <View className="flex-1 justify-center items-center">
-            <Text className="text-foreground">Welcome to Delivery App 06 Gjilan</Text>
-            <Button color={theme.colors.text} title="Go to login page" onPress={() => console.log('/auth')} />
+            <Text className="text-foreground">{translations?.language}</Text>
+            <Button
+                color={theme.colors.text}
+                title={translations?.auth.login.title}
+                onPress={() => setLanguageChoice(languageChoice === 'en' ? 'al' : 'en')}
+            />
         </View>
     );
 }

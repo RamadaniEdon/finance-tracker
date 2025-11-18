@@ -1,7 +1,7 @@
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import { useResolvedTheme } from '../store/useThemeStore';
+import { useColorScheme } from 'nativewind';
 
 export function useTheme() {
-    const resolved = useResolvedTheme();
-    return resolved === 'dark' ? DarkTheme : DefaultTheme;
+    const { colorScheme } = useColorScheme();
+    return colorScheme === 'dark' ? DarkTheme : DefaultTheme;
 }

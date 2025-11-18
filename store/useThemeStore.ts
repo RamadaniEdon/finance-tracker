@@ -1,6 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useColorScheme } from 'nativewind';
-import { useEffect } from 'react';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -23,14 +21,3 @@ export const useThemeStore = create<ThemeStore>()(
         },
     ),
 );
-
-export function useResolvedTheme() {
-    const { themeChoice } = useThemeStore();
-    const { colorScheme, setColorScheme } = useColorScheme();
-
-    useEffect(() => {
-        setColorScheme(themeChoice);
-    }, [setColorScheme, themeChoice]);
-
-    return colorScheme;
-}

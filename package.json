@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
+    "prestart": "npm run validate:translations",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -10,7 +11,8 @@
     "lint": "expo lint",
     "lint:fix": "expo lint --fix",
     "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "format:fix": "prettier --write .",
+    "validate:translations": "dotenv -e .env tsx localization/validate.ts"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -40,10 +42,12 @@
     "react-native-screens": "~4.16.0",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.5.1",
+    "zod": "^3.25.76",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "eslint-config-prettier": "^10.1.8",
@@ -51,6 +55,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.18",
+    "tsx": "^4.20.6",
     "typescript": "~5.9.2"
   },
   "private": true
