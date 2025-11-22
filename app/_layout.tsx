@@ -16,9 +16,20 @@ export default function RootLayout() {
             </View>
         );
     }
+
     return (
         <ThemeProvider value={theme}>
-            <Stack />
+            <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen
+                    name="create-transaction"
+                    options={{
+                        presentation: 'modal',
+                        headerShown: false,
+                        animation: 'slide_from_bottom'
+                    }}
+                />
+            </Stack>
         </ThemeProvider>
     );
 }

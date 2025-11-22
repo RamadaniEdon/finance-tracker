@@ -1,0 +1,25 @@
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { CreateTransactionForm } from '@/modules/transactions/components/CreateTransactionForm';
+import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '@/hooks/useTheme';
+
+export default function CreateTransactionScreen() {
+    const router = useRouter();
+    const theme = useTheme();
+
+    return (
+        <View className="flex-1 bg-background">
+            <View className="flex-row justify-between items-center px-4 pt-4 pb-2">
+                <TouchableOpacity onPress={() => router.back()} className="p-2 bg-card rounded-full">
+                    <Ionicons name="close" size={24} color={theme.colors.text} />
+                </TouchableOpacity>
+                <Text className="text-foreground text-xl font-bold">New Transaction</Text>
+                <View className="w-10" />
+            </View>
+
+            <CreateTransactionForm />
+        </View>
+    );
+}

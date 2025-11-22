@@ -6,6 +6,11 @@
     --background: #ffffff;
     --foreground: #000000;
     --primary: #5f0202;
+    --expense: #ef4444;
+    --income: #22c55e;
+    --card: #f3f4f6;
+    --subtext: #6b7280;
+    --border: #e5e7eb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,5 +18,10 @@
         --background: #000000;
         --foreground: #ffffff;
         --primary: #0b89a9;
+        --expense: #f87171;
+        --income: #4ade80;
+        --card: #1f2937;
+        --subtext: #9ca3af;
+        --border: #374151;
     }
 }
