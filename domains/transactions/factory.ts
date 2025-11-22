@@ -9,7 +9,7 @@ export const transactionSchema = z.object({
 });
 
 export function validateTransaction(data: unknown): CreateTransaction {
-    return transactionSchema.parse(data) as CreateTransaction;
+    return transactionSchema.parse(data);
 }
 
 export function createTransaction(data: unknown): CreateTransaction {

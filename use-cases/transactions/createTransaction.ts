@@ -1,12 +1,17 @@
-import { Transaction } from '../../domains/transactions/types';
+import { CreateTransaction, Transaction } from '../../domains/transactions/types';
 import { createTransaction } from '../../domains/transactions/factory';
-import { TransactionRepository } from '../../repositories/transactions/interface';
 
 export async function createTransactionUseCase(
-    data: unknown,
-    repository: TransactionRepository
-): Promise<Transaction> {
+    data: unknown
+): Promise<CreateTransaction> {
     const newTransaction = createTransaction(data);
 
-    return repository.create(newTransaction);
+    const transaction: Transaction = {
+        id: 'abc' + Math.random() * 100,
+        ...newTransaction
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    return transaction;
 }

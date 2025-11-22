@@ -1,11 +1,8 @@
-export type TransactionType = 'EXPENSE' | 'INCOME';
+import z from "zod";
+import { transactionSchema } from "./factory";
 
-export interface Transaction {
-    id: string;
-    amount: number;
-    type: TransactionType;
-    tags: string[];
-    description: string;
-}
+export type CreateTransaction = z.infer<typeof transactionSchema>;
 
-export type CreateTransaction = Omit<Transaction, 'id'>;
+export type Transaction = CreateTransaction & { id: string };
+
+export type TransactionType = Transaction['type'];

@@ -2,10 +2,13 @@ import { Tabs, useRouter } from 'expo-router';
 import { View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
     const theme = useTheme();
     const router = useRouter();
+    const insets = useSafeAreaInsets();
+
     return (
         <Tabs
             screenOptions={{
@@ -13,8 +16,7 @@ export default function TabLayout() {
                 tabBarStyle: {
                     backgroundColor: theme.colors.card,
                     borderTopColor: theme.colors.border,
-                    height: 60,
-                    paddingBottom: 8,
+                    height: 54 + insets.bottom,
                 },
                 tabBarActiveTintColor: theme.colors.primary,
                 tabBarInactiveTintColor: theme.colors.subtext,
@@ -30,7 +32,6 @@ export default function TabLayout() {
                 }}
             />
 
-            {/* Placeholder for the middle button */}
             <Tabs.Screen
                 name="add"
                 options={{

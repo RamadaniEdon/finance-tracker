@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
-import { TransactionType } from '@/domains/transactions/types';
+import { CreateTransaction, TransactionType } from '@/domains/transactions/types';
 import { Ionicons } from '@expo/vector-icons';
 import { cn } from '@/utils/cn';
+import { createTransactionUseCase } from '@/use-cases/transactions/createTransaction';
+import { useRouter } from 'expo-router';
 
 export function CreateTransactionForm() {
     const theme = useTheme();
+    const router = useRouter();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
@@ -32,6 +38,31 @@ export function CreateTransactionForm() {
     const handleIncomePress = () => {
         setType('INCOME');
     };
+
+    const handleCreateTransaction = async () => {
+        if (isLoading || isSuccess) return;
+
+        setIsLoading(true);
+        const transaction: CreateTransaction = {
+            amount: Number(amount),
+            type,
+            description,
+            tags,
+        }
+
+        try {
+            await createTransactionUseCase(transaction);
+            setIsLoading(false);
+            setIsSuccess(true);
+
+            setTimeout(() => {
+                router.back();
+            }, 1500);
+        } catch (error) {
+            console.error(error);
+            setIsLoading(false);
+        }
+    }
 
     return (
         <ScrollView className="flex-1 bg-background p-4" contentContainerStyle={{ paddingBottom: 100 }}>
@@ -112,8 +143,24 @@ export function CreateTransactionForm() {
             </View>
 
             {/* Submit Button */}
-            <Pressable className="bg-primary py-4 rounded-2xl items-center shadow-lg mt-4">
-                <Text className="text-white font-bold text-xl">Save Transaction</Text>
+            <Pressable
+                className={cn(
+                    "py-4 rounded-2xl items-center shadow-lg mt-4",
+                    isSuccess ? "bg-green-500" : "bg-primary"
+                )}
+                onPress={handleCreateTransaction}
+                disabled={isLoading || isSuccess}
+            >
+                {isLoading ? (
+                    <ActivityIndicator color="white" />
+                ) : isSuccess ? (
+                    <View className="flex-row items-center">
+                        <Ionicons name="checkmark-circle" size={24} color="white" className="mr-2" />
+                        <Text className="text-white font-bold text-xl ml-2">Transaction Saved!</Text>
+                    </View>
+                ) : (
+                    <Text className="text-white font-bold text-xl">Save Transaction</Text>
+                )}
             </Pressable>
         </ScrollView>
     );
