@@ -7,6 +7,7 @@ import { cn } from '@/utils/cn';
 import { createTransactionUseCase } from '@/use-cases/transactions/createTransaction';
 import { useRouter } from 'expo-router';
 import { useCreateTransaction } from '../hooks/useCreateTransaction';
+import { CustomDateTimePicker } from './DateTimePicker';
 
 export function CreateTransactionForm() {
     const theme = useTheme();
@@ -27,6 +28,7 @@ export function CreateTransactionForm() {
     const isSuccess = !loading && !error && !!data;
 
     const [amount, setAmount] = useState('');
+    const [date, setDate] = useState(new Date());
     const [description, setDescription] = useState('');
     const [type, setType] = useState<TransactionType>('INCOME');
     const [tags, setTags] = useState<string[]>([]);
@@ -59,6 +61,7 @@ export function CreateTransactionForm() {
             type,
             description,
             tags,
+            created_at: date,
         }
         createTransaction(transaction);
     }
@@ -96,6 +99,9 @@ export function CreateTransactionForm() {
                     <Text className={cn('font-semibold', type === 'INCOME' ? 'text-income' : 'text-subtext')}>Income</Text>
                 </Pressable>
             </View>
+
+            {/* Date Picker */}
+            <CustomDateTimePicker date={date} onChange={setDate} />
 
             {/* Description */}
             <View className="mb-6">
