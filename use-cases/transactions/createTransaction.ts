@@ -3,7 +3,7 @@ import { createTransaction } from '../../domains/transactions/factory';
 
 export async function createTransactionUseCase(
     data: unknown
-): Promise<CreateTransaction> {
+): Promise<Transaction> {
     const newTransaction = createTransaction(data);
 
     const transaction: Transaction = {

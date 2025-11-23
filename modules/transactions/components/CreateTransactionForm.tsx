@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, ActivityIndicator } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { CreateTransaction, TransactionType } from '@/domains/transactions/types';
@@ -6,13 +6,25 @@ import { Ionicons } from '@expo/vector-icons';
 import { cn } from '@/utils/cn';
 import { createTransactionUseCase } from '@/use-cases/transactions/createTransaction';
 import { useRouter } from 'expo-router';
+import { useCreateTransaction } from '../hooks/useCreateTransaction';
 
 export function CreateTransactionForm() {
     const theme = useTheme();
     const router = useRouter();
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [createTransaction, { data, loading, error }] = useCreateTransaction({
+        onCompleted: (data) => {
+            console.log(data);
+            setTimeout(() => {
+                router.back();
+            }, 1500);
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    });
+
+    const isSuccess = !loading && !error && !!data;
 
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
@@ -39,29 +51,16 @@ export function CreateTransactionForm() {
         setType('INCOME');
     };
 
-    const handleCreateTransaction = async () => {
-        if (isLoading || isSuccess) return;
+    const handleCreateTransaction = () => {
+        if (loading) return;
 
-        setIsLoading(true);
         const transaction: CreateTransaction = {
             amount: Number(amount),
             type,
             description,
             tags,
         }
-
-        try {
-            await createTransactionUseCase(transaction);
-            setIsLoading(false);
-            setIsSuccess(true);
-
-            setTimeout(() => {
-                router.back();
-            }, 1500);
-        } catch (error) {
-            console.error(error);
-            setIsLoading(false);
-        }
+        createTransaction(transaction);
     }
 
     return (
@@ -149,9 +148,9 @@ export function CreateTransactionForm() {
                     isSuccess ? "bg-green-500" : "bg-primary"
                 )}
                 onPress={handleCreateTransaction}
-                disabled={isLoading || isSuccess}
+                disabled={loading || isSuccess}
             >
-                {isLoading ? (
+                {loading ? (
                     <ActivityIndicator color="white" />
                 ) : isSuccess ? (
                     <View className="flex-row items-center">
