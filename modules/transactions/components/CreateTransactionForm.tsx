@@ -61,7 +61,7 @@ export function CreateTransactionForm() {
             type,
             description,
             tags,
-            created_at: date,
+            transactionDate: date,
         }
         createTransaction(transaction);
     }

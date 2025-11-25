@@ -6,7 +6,7 @@ export const transactionSchema = z.object({
     type: z.enum(['EXPENSE', 'INCOME']),
     tags: z.array(z.string()),
     description: z.string(),
-    created_at: z.union([z.date(), z.string().datetime()]).transform((val) => new Date(val)).or(z.date()).default(() => new Date()),
+    transactionDate: z.union([z.date(), z.string().datetime()]).transform((val) => new Date(val)).or(z.date()).default(() => new Date()),
 });
 
 export function validateTransaction(data: unknown): CreateTransaction {
