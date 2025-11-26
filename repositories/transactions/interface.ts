@@ -1,4 +1,4 @@
-import { Transaction, CreateTransaction } from '../../domains/transactions/types';
+import { Transaction, CreateTransaction } from '@/domains/transactions/types';
 
 export interface PaginationParams {
     /** The current page number (1-indexed) */
@@ -21,4 +21,7 @@ export interface TransactionRepository {
     addTransactionTags(transactionId: string, tagNames: string[]): Promise<void>;
     getTransactions(params: PaginationParams): Promise<PaginatedResult<Transaction>>;
     getTransactionById(id: string): Promise<Transaction | null>;
+    getBalance(until?: Date): Promise<number>;
+    getIncome(startDate: Date, endDate: Date): Promise<number>;
+    getExpenses(startDate: Date, endDate: Date): Promise<number>;
 }

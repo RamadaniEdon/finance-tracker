@@ -1,7 +1,7 @@
-import { inArray, count, desc } from 'drizzle-orm';
-import { db } from '../../database/db';
-import { tags, transactions, transactionTags } from '../../database/tables/schema';
-import { CreateTransaction, Transaction } from '../../domains/transactions/types';
+import { inArray, count, desc, sum, and, eq, gte, lte } from 'drizzle-orm';
+import { db } from '@/database/db';
+import { tags, transactions, transactionTags } from '@/database/tables/schema';
+import { CreateTransaction, Transaction } from '@/domains/transactions/types';
 import { TransactionRepository, PaginationParams, PaginatedResult } from './interface';
 import { toSqliteTimestamp, fromSqliteTimestamp } from '@/utils/sqliteHelpers';
 import * as Crypto from 'expo-crypto';
@@ -21,10 +21,14 @@ export class DrizzleTransactionRepository implements TransactionRepository {
     async createTransaction(transaction: CreateTransaction): Promise<Transaction> {
         const id = Crypto.randomUUID();
 
+        // Ensure amount is positive for logic check, then negate if expense
+        const absoluteAmount = Math.abs(transaction.amount);
+        const finalAmount = transaction.type === 'EXPENSE' ? -absoluteAmount : absoluteAmount;
+
         // Map domain entity to database record
         await db.insert(transactions).values({
             id,
-            amount: transaction.amount,
+            amount: finalAmount,
             type: transaction.type,
             description: transaction.description,
             transactionDate: toSqliteTimestamp(transaction.transactionDate),
@@ -33,7 +37,8 @@ export class DrizzleTransactionRepository implements TransactionRepository {
         // Return domain entity
         return {
             id,
-            ...transaction
+            ...transaction,
+            amount: absoluteAmount // Ensure returned entity has positive amount
         };
     }
 
@@ -64,6 +69,7 @@ export class DrizzleTransactionRepository implements TransactionRepository {
 
         const data = result.map(t => ({
             ...t,
+            amount: Math.abs(t.amount),
             transactionDate: fromSqliteTimestamp(t.transactionDate),
             tags: t.transactionTags.map(tt => tt.tagName)
         }));
@@ -88,8 +94,40 @@ export class DrizzleTransactionRepository implements TransactionRepository {
 
         return {
             ...result,
+            amount: Math.abs(result.amount),
             transactionDate: fromSqliteTimestamp(result.transactionDate),
             tags: result.transactionTags.map(tt => tt.tagName)
         };
+    }
+
+    async getBalance(until?: Date): Promise<number> {
+        const whereClause = until ? lte(transactions.transactionDate, toSqliteTimestamp(until)) : undefined;
+        const res = await db.select({ balance: sum(transactions.amount) })
+            .from(transactions)
+            .where(whereClause);
+        return Number(res[0]?.balance ?? 0);
+    }
+
+    async getIncome(startDate: Date, endDate: Date): Promise<number> {
+        const res = await db.select({ total: sum(transactions.amount) })
+            .from(transactions)
+            .where(and(
+                eq(transactions.type, 'INCOME'),
+                gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
+                lte(transactions.transactionDate, toSqliteTimestamp(endDate))
+            ));
+        return Number(res[0]?.total ?? 0);
+    }
+
+    async getExpenses(startDate: Date, endDate: Date): Promise<number> {
+        const res = await db.select({ total: sum(transactions.amount) })
+            .from(transactions)
+            .where(and(
+                eq(transactions.type, 'EXPENSE'),
+                gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
+                lte(transactions.transactionDate, toSqliteTimestamp(endDate))
+            ));
+        // Expenses are stored as negative, return absolute value
+        return Math.abs(Number(res[0]?.total ?? 0));
     }
 }

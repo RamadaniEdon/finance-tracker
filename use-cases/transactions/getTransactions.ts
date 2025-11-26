@@ -1,5 +1,5 @@
-import { TransactionRepository, PaginationParams, PaginatedResult } from '../../repositories/transactions/interface';
-import { Transaction } from '../../domains/transactions/types';
+import { TransactionRepository, PaginationParams, PaginatedResult } from '@/repositories/transactions/interface';
+import { Transaction } from '@/domains/transactions/types';
 
 export const getTransactionsUseCase = async (
     repository: TransactionRepository,

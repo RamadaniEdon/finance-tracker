@@ -33,6 +33,7 @@ export async function seedDatabase() {
             const date = faker.date.recent({ days: 50 });
 
             const amount = parseFloat(faker.finance.amount({ min: 10, max: 1000, dec: 2 }));
+            const finalAmount = isExpense ? -amount : amount;
 
             const description = isExpense
                 ? faker.commerce.productName()
@@ -40,7 +41,7 @@ export async function seedDatabase() {
 
             newTransactions.push({
                 id,
-                amount,
+                amount: finalAmount,
                 type: type as 'EXPENSE' | 'INCOME',
                 description,
                 transactionDate: toSqliteTimestamp(date),

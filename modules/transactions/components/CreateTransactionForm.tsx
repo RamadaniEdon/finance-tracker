@@ -4,7 +4,6 @@ import { useTheme } from '@/hooks/useTheme';
 import { CreateTransaction, TransactionType } from '@/domains/transactions/types';
 import { Ionicons } from '@expo/vector-icons';
 import { cn } from '@/utils/cn';
-import { createTransactionUseCase } from '@/use-cases/transactions/createTransaction';
 import { useRouter } from 'expo-router';
 import { useCreateTransaction } from '../hooks/useCreateTransaction';
 import { CustomDateTimePicker } from './DateTimePicker';

@@ -1,6 +1,6 @@
-import { CreateTransaction, Transaction } from '../../domains/transactions/types';
-import { createTransaction } from '../../domains/transactions/factory';
-import { DrizzleTransactionRepository } from '../../repositories/transactions/implementation';
+import { Transaction } from '@/domains/transactions/types';
+import { createTransaction } from '@/domains/transactions/factory';
+import { DrizzleTransactionRepository } from '@/repositories/transactions/implementation';
 
 export async function createTransactionUseCase(
     data: unknown
