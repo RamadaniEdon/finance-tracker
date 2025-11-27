@@ -1,20 +1,64 @@
 {
     "language": "English",
     "common": {
-        "ok": "OK",
+        "ok": "Ok",
         "cancel": "Cancel",
         "save": "Save",
         "delete": "Delete",
-        "error": "Error"
+        "error": "Error",
+        "date": "Date",
+        "today": "Today"
     },
     "auth": {
         "login": {
             "title": "Login",
-            "description": "Enter your credentials",
+            "description": "Please login to continue",
             "actions": {
                 "login": "Login",
-                "need_account": "Need an account?"
+                "need_account": "Don't have an account?"
             }
         }
+    },
+    "transactions": {
+        "create": {
+            "title": "New Transaction",
+            "amount": "Amount",
+            "expense": "Expense",
+            "income": "Income",
+            "description": "Description",
+            "description_placeholder": "What is this for?",
+            "tags": "Tags",
+            "tags_placeholder": "Add a tag...",
+            "success": "Transaction Saved!",
+            "save": "Save Transaction"
+        },
+        "list": {
+            "empty_title": "No transactions yet",
+            "empty_description": "Start by adding your first transaction!"
+        },
+        "details": {
+            "title": "Transaction Details",
+            "not_found": "Transaction not found",
+            "go_back": "Go Back",
+            "date_time": "DATE & TIME",
+            "type": "TYPE",
+            "tags": "TAGS"
+        }
+    },
+    "profile": {
+        "title": "Profile & Settings",
+        "seed_db": "Seed Database (Dev)",
+        "seed_warning": "Warning: This will delete all existing data.",
+        "language_toggle": "Change Language",
+        "current_language": "Current Language: English"
+    },
+    "tabs": {
+        "home": "Home",
+        "create": "Create Transaction",
+        "profile": "Profile"
+    },
+    "home": {
+        "title": "Transactions",
+        "subtitle": "Your recent financial activity"
     }
 }

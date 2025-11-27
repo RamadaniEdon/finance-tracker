@@ -6,6 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useTransactions } from '@/modules/transactions/hooks/useTransactions';
 import { Transaction } from '@/domains/transactions/types';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function TransactionDetails() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -14,6 +15,7 @@ export default function TransactionDetails() {
     const { fetchTransactionDetails } = useTransactions();
     const [transaction, setTransaction] = useState<Transaction | null>(null);
     const [loading, setLoading] = useState(true);
+    const { t } = useTranslations();
 
     useEffect(() => {
         const loadDetails = async () => {
@@ -37,9 +39,9 @@ export default function TransactionDetails() {
     if (!transaction) {
         return (
             <SafeAreaView className="flex-1 justify-center items-center" style={{ backgroundColor: theme.colors.background }}>
-                <Text style={{ color: theme.colors.text }}>Transaction not found</Text>
+                <Text style={{ color: theme.colors.text }}>{t.transactions.details.not_found}</Text>
                 <Pressable onPress={() => router.back()} className="mt-4">
-                    <Text style={{ color: theme.colors.primary }}>Go Back</Text>
+                    <Text style={{ color: theme.colors.primary }}>{t.transactions.details.go_back}</Text>
                 </Pressable>
             </SafeAreaView>
         );
@@ -74,7 +76,7 @@ export default function TransactionDetails() {
                     <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
                 </Pressable>
                 <Text className="text-lg font-semibold ml-2" style={{ color: theme.colors.text }}>
-                    Transaction Details
+                    {t.transactions.details.title}
                 </Text>
             </View>
 
@@ -113,7 +115,7 @@ export default function TransactionDetails() {
                     {/* Date & Time */}
                     <View>
                         <Text className="text-sm font-medium mb-2" style={{ color: theme.colors.subtext }}>
-                            DATE & TIME
+                            {t.transactions.details.date_time}
                         </Text>
                         <View
                             className="p-4 rounded-2xl flex-row items-center justify-between"
@@ -130,7 +132,7 @@ export default function TransactionDetails() {
                     {/* Type */}
                     <View>
                         <Text className="text-sm font-medium mb-2" style={{ color: theme.colors.subtext }}>
-                            TYPE
+                            {t.transactions.details.type}
                         </Text>
                         <View
                             className="p-4 rounded-2xl flex-row items-center"
@@ -151,7 +153,7 @@ export default function TransactionDetails() {
                     {/* Tags */}
                     <View>
                         <Text className="text-sm font-medium mb-2" style={{ color: theme.colors.subtext }}>
-                            TAGS
+                            {t.transactions.details.tags}
                         </Text>
                         <View className="flex-row flex-wrap gap-2">
                             {transaction.tags.map((tag, index) => (

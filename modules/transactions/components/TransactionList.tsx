@@ -4,8 +4,11 @@ import { useTheme } from '@/hooks/useTheme';
 import { useTransactions } from '../hooks/useTransactions';
 import { TransactionItem } from './TransactionItem';
 
+import { useTranslations } from '@/hooks/useTranslations';
+
 export const TransactionList: React.FC = () => {
     const theme = useTheme();
+    const { t } = useTranslations();
     const {
         transactions,
         loading,
@@ -39,13 +42,13 @@ export const TransactionList: React.FC = () => {
                         className="text-lg font-medium text-center mb-2"
                         style={{ color: theme.colors.text }}
                     >
-                        No transactions yet
+                        {t.transactions.list.empty_title}
                     </Text>
                     <Text
                         className="text-sm text-center"
                         style={{ color: theme.colors.subtext }}
                     >
-                        Start by adding your first transaction!
+                        {t.transactions.list.empty_description}
                     </Text>
                 </View>
             );

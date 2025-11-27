@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/utils/cn';
 
+import { useTranslations } from '@/hooks/useTranslations';
+
 interface CustomDateTimePickerProps {
     date: Date;
     onChange: (date: Date) => void;
@@ -12,6 +14,7 @@ interface CustomDateTimePickerProps {
 
 export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerProps) {
     const theme = useTheme();
+    const { t } = useTranslations();
     const [showPicker, setShowPicker] = useState(false);
 
     const handleChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
@@ -44,7 +47,7 @@ export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerPro
 
     return (
         <View className="mb-6">
-            <Text className="text-subtext mb-2 font-medium">Date</Text>
+            <Text className="text-subtext mb-2 font-medium">{t.common.date}</Text>
             <Pressable
                 onPress={togglePicker}
                 className="bg-card flex-row items-center justify-between p-4 rounded-2xl border border-border"
@@ -52,7 +55,7 @@ export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerPro
                 <View className="flex-row items-center">
                     <Ionicons name="calendar-outline" size={24} color={theme.colors.primary} className="mr-3" />
                     <Text className="text-foreground text-lg font-medium">
-                        {isToday(date) ? 'Today' : formatDate(date)}
+                        {isToday(date) ? t.common.today : formatDate(date)}
                     </Text>
                 </View>
                 {/* Show different icon based on state if needed, or just chevron */}

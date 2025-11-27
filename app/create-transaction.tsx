@@ -5,10 +5,12 @@ import { CreateTransactionForm } from '@/modules/transactions/components/CreateT
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function CreateTransactionScreen() {
     const router = useRouter();
     const theme = useTheme();
+    const { t } = useTranslations();
 
     return (
         <SafeAreaView className="flex-1">
@@ -17,7 +19,7 @@ export default function CreateTransactionScreen() {
                     <TouchableOpacity onPress={() => router.back()} className="p-2 bg-card rounded-full">
                         <Ionicons name="close" size={24} color={theme.colors.text} />
                     </TouchableOpacity>
-                    <Text className="text-foreground text-xl font-bold">New Transaction</Text>
+                    <Text className="text-foreground text-xl font-bold">{t.transactions.create.title}</Text>
                     <View className="w-10" />
                 </View>
 

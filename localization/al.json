@@ -1,20 +1,64 @@
 {
     "language": "Shqip",
     "common": {
-        "ok": "Ne rregull",
+        "ok": "Ok",
         "cancel": "Anulo",
         "save": "Ruaj",
         "delete": "Fshij",
-        "error": "Gabim"
+        "error": "Gabim",
+        "date": "Data",
+        "today": "Sot"
     },
     "auth": {
         "login": {
-            "title": "Kyqu",
-            "description": "Sheno kredencialet",
+            "title": "Hyr",
+            "description": "Ju lutem hyni për të vazhduar",
             "actions": {
-                "login": "Kyqu",
+                "login": "Hyr",
                 "need_account": "Nuk keni llogari?"
             }
         }
+    },
+    "transactions": {
+        "create": {
+            "title": "Transaksion i Ri",
+            "amount": "Shuma",
+            "expense": "Shpenzim",
+            "income": "Të Ardhura",
+            "description": "Përshkrimi",
+            "description_placeholder": "Për çfarë është kjo?",
+            "tags": "Etiketat",
+            "tags_placeholder": "Shto një etiketë...",
+            "success": "Transaksioni u Ruajt!",
+            "save": "Ruaj Transaksionin"
+        },
+        "list": {
+            "empty_title": "Ende asnjë transaksion",
+            "empty_description": "Filloni duke shtuar transaksionin tuaj të parë!"
+        },
+        "details": {
+            "title": "Detajet e Transaksionit",
+            "not_found": "Transaksioni nuk u gjet",
+            "go_back": "Kthehu",
+            "date_time": "DATA & ORA",
+            "type": "LLOJI",
+            "tags": "ETIKETAT"
+        }
+    },
+    "profile": {
+        "title": "Profili dhe Cilësimet",
+        "seed_db": "Mbush Bazen e te Dhenave (Dev)",
+        "seed_warning": "Kujdes: Kjo do të fshijë të gjitha të dhënat ekzistuese.",
+        "language_toggle": "Ndrysho Gjuhën",
+        "current_language": "Gjuha Aktuale: Shqip"
+    },
+    "tabs": {
+        "home": "Kreu",
+        "create": "Krijo Transaksion",
+        "profile": "Profili"
+    },
+    "home": {
+        "title": "Transaksionet",
+        "subtitle": "Aktiviteti juaj financiar i fundit"
     }
 }

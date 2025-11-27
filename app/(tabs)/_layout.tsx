@@ -3,11 +3,13 @@ import { View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function TabLayout() {
     const theme = useTheme();
     const router = useRouter();
     const insets = useSafeAreaInsets();
+    const { t } = useTranslations();
 
     return (
         <Tabs
@@ -25,7 +27,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="home"
                 options={{
-                    title: 'Home',
+                    title: t.tabs.home,
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="home" size={size} color={color} />
                     ),
@@ -35,7 +37,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="add"
                 options={{
-                    title: 'Create Transaction',
+                    title: t.tabs.create,
                     tabBarButton: () => (
                         <View className="items-center justify-center -mt-8">
                             <TouchableOpacity
@@ -53,7 +55,7 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="profile"
                 options={{
-                    title: 'Profile',
+                    title: t.tabs.profile,
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="person" size={size} color={color} />
                     ),

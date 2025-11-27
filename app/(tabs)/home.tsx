@@ -3,9 +3,11 @@ import { View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/hooks/useTheme';
 import { TransactionList } from '@/modules/transactions/components/TransactionList';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Home() {
     const theme = useTheme();
+    const { t } = useTranslations();
 
     return (
         <SafeAreaView className="flex-1" style={{ backgroundColor: theme.colors.background }}>
@@ -15,13 +17,13 @@ export default function Home() {
                         className="text-3xl font-bold"
                         style={{ color: theme.colors.text }}
                     >
-                        Transactions
+                        {t.home.title}
                     </Text>
                     <Text
                         className="text-base mt-1"
                         style={{ color: theme.colors.subtext }}
                     >
-                        Your recent financial activity
+                        {t.home.subtitle}
                     </Text>
                 </View>
 

@@ -6,11 +6,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { cn } from '@/utils/cn';
 import { useRouter } from 'expo-router';
 import { useCreateTransaction } from '../hooks/useCreateTransaction';
+import { useTranslations } from '@/hooks/useTranslations';
 import { CustomDateTimePicker } from './DateTimePicker';
 
 export function CreateTransactionForm() {
     const theme = useTheme();
     const router = useRouter();
+
+    const { t } = useTranslations();
 
     const [createTransaction, { data, loading, error }] = useCreateTransaction({
         onCompleted: (data) => {
@@ -69,7 +72,7 @@ export function CreateTransactionForm() {
         <ScrollView className="flex-1 bg-background p-4" contentContainerStyle={{ paddingBottom: 100 }}>
             {/* Amount Input */}
             <View className="mb-8 items-center">
-                <Text className="text-subtext mb-2 text-lg">Amount</Text>
+                <Text className="text-subtext mb-2 text-lg">{t.transactions.create.amount}</Text>
                 <View className="flex-row items-center">
                     <Text className={cn('text-4xl font-bold', type === 'EXPENSE' ? 'text-expense' : 'text-income')}>$</Text>
                     <TextInput
@@ -89,13 +92,13 @@ export function CreateTransactionForm() {
                     className={cn('flex-1 py-3 rounded-xl items-center', type === 'EXPENSE' && 'bg-background')}
                     onPress={() => handleExpensePress()}
                 >
-                    <Text className={cn('font-semibold', type === 'EXPENSE' ? 'text-expense' : 'text-subtext')}>Expense</Text>
+                    <Text className={cn('font-semibold', type === 'EXPENSE' ? 'text-expense' : 'text-subtext')}>{t.transactions.create.expense}</Text>
                 </Pressable>
                 <Pressable
                     className={cn('flex-1 py-3 rounded-xl items-center', type === 'INCOME' && 'bg-background')}
                     onPress={() => handleIncomePress()}
                 >
-                    <Text className={cn('font-semibold', type === 'INCOME' ? 'text-income' : 'text-subtext')}>Income</Text>
+                    <Text className={cn('font-semibold', type === 'INCOME' ? 'text-income' : 'text-subtext')}>{t.transactions.create.income}</Text>
                 </Pressable>
             </View>
 
@@ -104,19 +107,19 @@ export function CreateTransactionForm() {
 
             {/* Description */}
             <View className="mb-6">
-                <Text className="text-subtext mb-2 font-medium">Description</Text>
+                <Text className="text-subtext mb-2 font-medium">{t.transactions.create.description}</Text>
                 <TextInput
                     className="bg-card text-foreground p-4 rounded-2xl text-lg"
                     value={description}
                     onChangeText={setDescription}
-                    placeholder="What is this for?"
+                    placeholder={t.transactions.create.description_placeholder}
                     placeholderTextColor={theme.colors.text}
                 />
             </View>
 
             {/* Tags */}
             <View className="mb-6">
-                <Text className="text-subtext mb-2 font-medium">Tags</Text>
+                <Text className="text-subtext mb-2 font-medium">{t.transactions.create.tags}</Text>
                 <View className="flex-row flex-wrap gap-2 mb-3">
                     {tags.map(tag => (
                         <Pressable
@@ -136,7 +139,7 @@ export function CreateTransactionForm() {
                         value={currentTag}
                         onChangeText={setCurrentTag}
                         onSubmitEditing={handleAddTag}
-                        placeholder="Add a tag..."
+                        placeholder={t.transactions.create.tags_placeholder}
                         placeholderTextColor={theme.colors.text}
                         returnKeyType="done"
                     />
@@ -160,10 +163,10 @@ export function CreateTransactionForm() {
                 ) : isSuccess ? (
                     <View className="flex-row items-center">
                         <Ionicons name="checkmark-circle" size={24} color="white" className="mr-2" />
-                        <Text className="text-white font-bold text-xl ml-2">Transaction Saved!</Text>
+                        <Text className="text-white font-bold text-xl ml-2">{t.transactions.create.success}</Text>
                     </View>
                 ) : (
-                    <Text className="text-white font-bold text-xl">Save Transaction</Text>
+                    <Text className="text-white font-bold text-xl">{t.transactions.create.save}</Text>
                 )}
             </Pressable>
         </ScrollView>
