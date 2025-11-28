@@ -6,7 +6,11 @@ import { TransactionItem } from './TransactionItem';
 
 import { useTranslations } from '@/hooks/useTranslations';
 
-export const TransactionList: React.FC = () => {
+interface TransactionListProps {
+    ListHeaderComponent?: React.ComponentType<any> | React.ReactElement | null;
+}
+
+export const TransactionList: React.FC<TransactionListProps> = ({ ListHeaderComponent }) => {
     const theme = useTheme();
     const { t } = useTranslations();
     const {
@@ -63,6 +67,7 @@ export const TransactionList: React.FC = () => {
             keyExtractor={(item) => item.id}
             onEndReached={loadMore}
             onEndReachedThreshold={0.5}
+            ListHeaderComponent={ListHeaderComponent}
             ListFooterComponent={renderFooter}
             ListEmptyComponent={renderEmpty}
             contentContainerStyle={{ paddingVertical: 16, flexGrow: 1 }}

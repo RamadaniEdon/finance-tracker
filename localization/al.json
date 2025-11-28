@@ -60,5 +60,11 @@
     "home": {
         "title": "Transaksionet",
         "subtitle": "Aktiviteti juaj financiar i fundit"
+    },
+    "account": {
+        "total_balance": "Bilanci Total",
+        "income": "Të Ardhura",
+        "expenses": "Shpenzime",
+        "vs_last_month": "muajin e kaluar"
     }
 }

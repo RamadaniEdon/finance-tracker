@@ -79,6 +79,12 @@ export const translationSchema = z.object(
             title: z.string({ message: 'Home title is required to be string' }),
             subtitle: z.string({ message: 'Home subtitle is required to be string' }),
         }, { message: 'Home translations must be an object' }),
+        account: z.object({
+            total_balance: z.string({ message: 'Total balance label is required to be string' }),
+            income: z.string({ message: 'Income label is required to be string' }),
+            expenses: z.string({ message: 'Expenses label is required to be string' }),
+            vs_last_month: z.string({ message: 'Vs last month label is required to be string' }),
+        }, { message: 'Account translations must be an object' }),
     },
     { message: 'Translation schema must be an object' },
 );

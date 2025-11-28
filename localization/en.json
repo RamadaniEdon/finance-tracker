@@ -60,5 +60,11 @@
     "home": {
         "title": "Transactions",
         "subtitle": "Your recent financial activity"
+    },
+    "account": {
+        "total_balance": "Total Balance",
+        "income": "Income",
+        "expenses": "Expenses",
+        "vs_last_month": "vs last month"
     }
 }
