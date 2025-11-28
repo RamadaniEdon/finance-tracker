@@ -42,3 +42,11 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+*.swn
+.*.sw?

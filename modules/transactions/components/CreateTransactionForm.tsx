@@ -27,7 +27,7 @@ export function CreateTransactionForm() {
         },
         onError: (error) => {
             console.error(error);
-        }
+        },
     });
 
     const isSuccess = !loading && !error && !!data;
@@ -47,7 +47,7 @@ export function CreateTransactionForm() {
     };
 
     const removeTag = (tagToRemove: string) => {
-        setTags(tags.filter(tag => tag !== tagToRemove));
+        setTags(tags.filter((tag) => tag !== tagToRemove));
     };
 
     const handleExpensePress = () => {
@@ -67,9 +67,9 @@ export function CreateTransactionForm() {
             description,
             tags,
             transactionDate: date,
-        }
+        };
         createTransaction(transaction);
-    }
+    };
 
     return (
         <ScrollView className="flex-1 bg-background p-4" contentContainerStyle={{ paddingBottom: 100 }}>
@@ -77,9 +77,14 @@ export function CreateTransactionForm() {
             <View className="mb-8 items-center">
                 <Text className="text-subtext mb-2 text-lg">{t.transactions.create.amount}</Text>
                 <View className="flex-row items-center">
-                    <Text className={cn('text-4xl font-bold', type === 'EXPENSE' ? 'text-expense' : 'text-income')}>$</Text>
+                    <Text className={cn('text-4xl font-bold', type === 'EXPENSE' ? 'text-expense' : 'text-income')}>
+                        $
+                    </Text>
                     <TextInput
-                        className={cn('text-5xl font-bold min-w-[100px] text-center', type === 'EXPENSE' ? 'text-expense' : 'text-income')}
+                        className={cn(
+                            'text-5xl font-bold min-w-[100px] text-center',
+                            type === 'EXPENSE' ? 'text-expense' : 'text-income',
+                        )}
                         value={amount}
                         onChangeText={setAmount}
                         keyboardType="numeric"
@@ -95,13 +100,17 @@ export function CreateTransactionForm() {
                     className={cn('flex-1 py-3 rounded-xl items-center', type === 'EXPENSE' && 'bg-background')}
                     onPress={() => handleExpensePress()}
                 >
-                    <Text className={cn('font-semibold', type === 'EXPENSE' ? 'text-expense' : 'text-subtext')}>{t.transactions.create.expense}</Text>
+                    <Text className={cn('font-semibold', type === 'EXPENSE' ? 'text-expense' : 'text-subtext')}>
+                        {t.transactions.create.expense}
+                    </Text>
                 </Pressable>
                 <Pressable
                     className={cn('flex-1 py-3 rounded-xl items-center', type === 'INCOME' && 'bg-background')}
                     onPress={() => handleIncomePress()}
                 >
-                    <Text className={cn('font-semibold', type === 'INCOME' ? 'text-income' : 'text-subtext')}>{t.transactions.create.income}</Text>
+                    <Text className={cn('font-semibold', type === 'INCOME' ? 'text-income' : 'text-subtext')}>
+                        {t.transactions.create.income}
+                    </Text>
                 </Pressable>
             </View>
 
@@ -120,12 +129,8 @@ export function CreateTransactionForm() {
             <View className="mb-6">
                 <Text className="text-subtext mb-2 font-medium">{t.transactions.create.tags}</Text>
                 <View className="flex-row flex-wrap gap-2 mb-3">
-                    {tags.map(tag => (
-                        <Badge
-                            key={tag}
-                            label={`#${tag}`}
-                            onRemove={() => removeTag(tag)}
-                        />
+                    {tags.map((tag) => (
+                        <Badge key={tag} label={`#${tag}`} onRemove={() => removeTag(tag)} />
                     ))}
                 </View>
                 <View className="flex-row items-center bg-card rounded-2xl px-4">

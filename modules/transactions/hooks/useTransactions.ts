@@ -2,21 +2,15 @@ import { useEffect, useCallback } from 'react';
 import { useTransactionStore } from '../store/useTransactionStore';
 
 export function useTransactions() {
-    const {
-        transactions,
-        loading,
-        error,
-        hasMore,
-        fetchTransactions,
-        fetchTransactionDetails,
-        page
-    } = useTransactionStore();
+    const { transactions, loading, error, hasMore, fetchTransactions, fetchTransactionDetails, page } =
+        useTransactionStore();
 
     useEffect(() => {
         // Initial fetch if no transactions
         if (transactions.length === 0) {
             fetchTransactions(1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadMore = useCallback(() => {
@@ -37,6 +31,6 @@ export function useTransactions() {
         hasMore,
         loadMore,
         refresh,
-        fetchTransactionDetails
+        fetchTransactionDetails,
     };
 }

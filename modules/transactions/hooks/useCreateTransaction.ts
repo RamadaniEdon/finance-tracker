@@ -1,6 +1,6 @@
-import { CreateTransaction, Transaction } from "@/domains/transactions/types";
-import { createTransactionUseCase } from "@/use-cases/transactions/createTransaction";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { CreateTransaction, Transaction } from '@/domains/transactions/types';
+import { createTransactionUseCase } from '@/use-cases/transactions/createTransaction';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type CreateTransactionOptions = {
     onCompleted?: (data: Transaction) => void;
@@ -18,27 +18,30 @@ export function useCreateTransaction(hookOptions?: CreateTransactionOptions) {
         hookOptionsRef.current = hookOptions;
     }, [hookOptions]);
 
-    const createTransaction = useCallback(async (data: CreateTransaction, options?: CreateTransactionOptions) => {
-        if (loading) return;
+    const createTransaction = useCallback(
+        async (data: CreateTransaction, options?: CreateTransactionOptions) => {
+            if (loading) return;
 
-        setLoading(true);
+            setLoading(true);
 
-        try {
-            const transaction = await createTransactionUseCase(data);
-            setData(transaction);
-            setLoading(false);
-            setError(undefined);
+            try {
+                const transaction = await createTransactionUseCase(data);
+                setData(transaction);
+                setLoading(false);
+                setError(undefined);
 
-            const onCompleted = options?.onCompleted || hookOptionsRef.current?.onCompleted;
-            onCompleted?.(transaction);
-        } catch (error) {
-            setLoading(false);
-            setError(error);
+                const onCompleted = options?.onCompleted || hookOptionsRef.current?.onCompleted;
+                onCompleted?.(transaction);
+            } catch (error) {
+                setLoading(false);
+                setError(error);
 
-            const onError = options?.onError || hookOptionsRef.current?.onError;
-            onError?.(error);
-        }
-    }, [loading]);
+                const onError = options?.onError || hookOptionsRef.current?.onError;
+                onError?.(error);
+            }
+        },
+        [loading],
+    );
 
     return [createTransaction, { data, loading, error }] as const;
 }

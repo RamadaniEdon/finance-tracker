@@ -13,13 +13,7 @@ interface TransactionListProps {
 export const TransactionList: React.FC<TransactionListProps> = ({ ListHeaderComponent }) => {
     const theme = useTheme();
     const { t } = useTranslations();
-    const {
-        transactions,
-        loading,
-        hasMore,
-        loadMore,
-        refresh
-    } = useTransactions();
+    const { transactions, loading, hasMore, loadMore, refresh } = useTransactions();
 
     const renderFooter = () => {
         if (!loading) return <View className="h-20" />;
@@ -42,16 +36,10 @@ export const TransactionList: React.FC<TransactionListProps> = ({ ListHeaderComp
         if (!loading && transactions.length === 0) {
             return (
                 <View className="flex-1 justify-center items-center py-20 px-4">
-                    <Text
-                        className="text-lg font-medium text-center mb-2"
-                        style={{ color: theme.colors.text }}
-                    >
+                    <Text className="text-lg font-medium text-center mb-2" style={{ color: theme.colors.text }}>
                         {t.transactions.list.empty_title}
                     </Text>
-                    <Text
-                        className="text-sm text-center"
-                        style={{ color: theme.colors.subtext }}
-                    >
+                    <Text className="text-sm text-center" style={{ color: theme.colors.subtext }}>
                         {t.transactions.list.empty_description}
                     </Text>
                 </View>

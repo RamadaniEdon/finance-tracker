@@ -36,7 +36,9 @@ This document outlines the strict rules for development within this project. Fol
   - **Source of Truth**: `tailwind.config.js`.
   - **Usage**: Use Tailwind utility classes (e.g., `bg-primary`, `text-text-secondary`).
   - **JS Access**: If you need color values in JavaScript/TypeScript, use the `hooks/useTheme.ts` hook.
-  - **Prohibition**: Do NOT hardcode hex values or use colors not defined in the theme.
+  - **Prohibition**: 
+    - Do NOT hardcode hex values or use colors not defined in the theme.
+    - Do NOT use the `shadow-sm` className. Use `elevation` (Android) or `shadow` props/styles (iOS) appropriately, or other shadow utilities if available, but `shadow-sm` is strictly forbidden.
 
 ## 4. Localization (i18n)
 

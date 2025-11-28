@@ -19,7 +19,6 @@ export default function RootLayout() {
     }
 
     return (
-
         <ThemeProvider value={theme}>
             <SafeAreaProvider>
                 <Stack screenOptions={{ headerShown: false }}>

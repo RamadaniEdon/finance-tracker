@@ -28,11 +28,14 @@ export default function TransactionDetails() {
             }
         };
         loadDetails();
-    }, [id]);
+    }, [fetchTransactionDetails, id]);
 
     if (loading) {
         return (
-            <SafeAreaView className="flex-1 justify-center items-center" style={{ backgroundColor: theme.colors.background }}>
+            <SafeAreaView
+                className="flex-1 justify-center items-center"
+                style={{ backgroundColor: theme.colors.background }}
+            >
                 <ActivityIndicator size="large" color={theme.colors.primary} />
             </SafeAreaView>
         );
@@ -40,7 +43,10 @@ export default function TransactionDetails() {
 
     if (!transaction) {
         return (
-            <SafeAreaView className="flex-1 justify-center items-center" style={{ backgroundColor: theme.colors.background }}>
+            <SafeAreaView
+                className="flex-1 justify-center items-center"
+                style={{ backgroundColor: theme.colors.background }}
+            >
                 <Text style={{ color: theme.colors.text }}>{t.transactions.details.not_found}</Text>
                 <Pressable onPress={() => router.back()} className="mt-4">
                     <Text style={{ color: theme.colors.primary }}>{t.transactions.details.go_back}</Text>
@@ -87,24 +93,16 @@ export default function TransactionDetails() {
                 <Card className="items-center justify-center py-10 rounded-3xl mb-6">
                     <View
                         className="w-16 h-16 rounded-full items-center justify-center mb-4"
-                        style={{ backgroundColor: isExpense ? `${theme.colors.expense}20` : `${theme.colors.income}20` }}
+                        style={{
+                            backgroundColor: isExpense ? `${theme.colors.expense}20` : `${theme.colors.income}20`,
+                        }}
                     >
-                        <Ionicons
-                            name={isExpense ? "arrow-down" : "arrow-up"}
-                            size={32}
-                            color={amountColor}
-                        />
+                        <Ionicons name={isExpense ? 'arrow-down' : 'arrow-up'} size={32} color={amountColor} />
                     </View>
-                    <Text
-                        className="text-4xl font-bold mb-2"
-                        style={{ color: amountColor }}
-                    >
+                    <Text className="text-4xl font-bold mb-2" style={{ color: amountColor }}>
                         {sign}${transaction.amount.toFixed(2)}
                     </Text>
-                    <Text
-                        className="text-lg font-medium"
-                        style={{ color: theme.colors.subtext }}
-                    >
+                    <Text className="text-lg font-medium" style={{ color: theme.colors.subtext }}>
                         {transaction.description}
                     </Text>
                 </Card>
@@ -118,7 +116,12 @@ export default function TransactionDetails() {
                         </Text>
                         <Card className="flex-row items-center justify-between">
                             <View className="flex-row items-center">
-                                <Ionicons name="calendar-outline" size={20} color={theme.colors.text} className="mr-3" />
+                                <Ionicons
+                                    name="calendar-outline"
+                                    size={20}
+                                    color={theme.colors.text}
+                                    className="mr-3"
+                                />
                                 <Text style={{ color: theme.colors.text }}>{formattedDate}</Text>
                             </View>
                             <Text style={{ color: theme.colors.subtext }}>{formattedTime}</Text>
@@ -132,7 +135,7 @@ export default function TransactionDetails() {
                         </Text>
                         <Card className="flex-row items-center">
                             <Ionicons
-                                name={isExpense ? "trending-down" : "trending-up"}
+                                name={isExpense ? 'trending-down' : 'trending-up'}
                                 size={20}
                                 color={amountColor}
                                 className="mr-3"
@@ -150,10 +153,7 @@ export default function TransactionDetails() {
                         </Text>
                         <View className="flex-row flex-wrap gap-2">
                             {transaction.tags.map((tag, index) => (
-                                <Badge
-                                    key={index}
-                                    label={`#${tag}`}
-                                />
+                                <Badge key={index} label={`#${tag}`} />
                             ))}
                         </View>
                     </View>

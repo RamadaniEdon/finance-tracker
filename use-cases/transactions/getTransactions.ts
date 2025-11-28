@@ -3,14 +3,14 @@ import { Transaction } from '@/domains/transactions/types';
 
 export const getTransactionsUseCase = async (
     repository: TransactionRepository,
-    params: PaginationParams
+    params: PaginationParams,
 ): Promise<PaginatedResult<Transaction>> => {
     return repository.getTransactions(params);
 };
 
 export const getTransactionByIdUseCase = async (
     repository: TransactionRepository,
-    id: string
+    id: string,
 ): Promise<Transaction | null> => {
     return repository.getTransactionById(id);
 };

@@ -19,11 +19,11 @@ export const useFinancialsStore = create<FinancialsState>((set) => ({
         try {
             const [currentPeriod, previousPeriod] = await Promise.all([
                 getPeriodFinancialsUseCase(currentStart, currentEnd),
-                getPeriodFinancialsUseCase(previousStart, previousEnd)
+                getPeriodFinancialsUseCase(previousStart, previousEnd),
             ]);
             set({ currentPeriod, previousPeriod, loading: false });
         } catch (error) {
             set({ error: 'Failed to fetch financials', loading: false });
         }
-    }
+    },
 }));

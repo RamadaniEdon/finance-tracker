@@ -10,12 +10,12 @@ export class DrizzleTransactionRepository implements TransactionRepository {
     async getExistingTags(names: string[]): Promise<string[]> {
         if (names.length === 0) return [];
         const result = await db.select({ name: tags.name }).from(tags).where(inArray(tags.name, names));
-        return result.map(t => t.name);
+        return result.map((t) => t.name);
     }
 
     async createTags(names: string[]): Promise<void> {
         if (names.length === 0) return;
-        await db.insert(tags).values(names.map(name => ({ name })));
+        await db.insert(tags).values(names.map((name) => ({ name })));
     }
 
     async createTransaction(transaction: CreateTransaction): Promise<Transaction> {
@@ -38,16 +38,18 @@ export class DrizzleTransactionRepository implements TransactionRepository {
         return {
             id,
             ...transaction,
-            amount: absoluteAmount // Ensure returned entity has positive amount
+            amount: absoluteAmount, // Ensure returned entity has positive amount
         };
     }
 
     async addTransactionTags(transactionId: string, tagNames: string[]): Promise<void> {
         if (tagNames.length === 0) return;
-        await db.insert(transactionTags).values(tagNames.map(tagName => ({
-            transactionId,
-            tagName
-        })));
+        await db.insert(transactionTags).values(
+            tagNames.map((tagName) => ({
+                transactionId,
+                tagName,
+            })),
+        );
     }
 
     async getTransactions(params: PaginationParams): Promise<PaginatedResult<Transaction>> {
@@ -55,7 +57,7 @@ export class DrizzleTransactionRepository implements TransactionRepository {
         const offset = (page - 1) * limit;
 
         const [totalCount] = await db.select({ count: count() }).from(transactions);
-        const total = totalCount.count;
+        const total = totalCount?.count ?? 0;
         const totalPages = Math.ceil(total / limit);
 
         const result = await db.query.transactions.findMany({
@@ -63,22 +65,22 @@ export class DrizzleTransactionRepository implements TransactionRepository {
             offset,
             orderBy: [desc(transactions.transactionDate)],
             with: {
-                transactionTags: true
-            }
+                transactionTags: true,
+            },
         });
 
-        const data = result.map(t => ({
+        const data = result.map((t) => ({
             ...t,
             amount: Math.abs(t.amount),
             transactionDate: fromSqliteTimestamp(t.transactionDate),
-            tags: t.transactionTags.map(tt => tt.tagName)
+            tags: t.transactionTags.map((tt) => tt.tagName),
         }));
 
         return {
             data,
             total,
             totalPages,
-            currentPage: page
+            currentPage: page,
         };
     }
 
@@ -86,8 +88,8 @@ export class DrizzleTransactionRepository implements TransactionRepository {
         const result = await db.query.transactions.findFirst({
             where: (transactions, { eq }) => eq(transactions.id, id),
             with: {
-                transactionTags: true
-            }
+                transactionTags: true,
+            },
         });
 
         if (!result) return null;
@@ -96,38 +98,90 @@ export class DrizzleTransactionRepository implements TransactionRepository {
             ...result,
             amount: Math.abs(result.amount),
             transactionDate: fromSqliteTimestamp(result.transactionDate),
-            tags: result.transactionTags.map(tt => tt.tagName)
+            tags: result.transactionTags.map((tt) => tt.tagName),
         };
     }
 
     async getBalance(until?: Date): Promise<number> {
         const whereClause = until ? lte(transactions.transactionDate, toSqliteTimestamp(until)) : undefined;
-        const res = await db.select({ balance: sum(transactions.amount) })
+        const res = await db
+            .select({ balance: sum(transactions.amount) })
             .from(transactions)
             .where(whereClause);
         return Number(res[0]?.balance ?? 0);
     }
 
     async getIncome(startDate: Date, endDate: Date): Promise<number> {
-        const res = await db.select({ total: sum(transactions.amount) })
+        const res = await db
+            .select({ total: sum(transactions.amount) })
             .from(transactions)
-            .where(and(
-                eq(transactions.type, 'INCOME'),
-                gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
-                lte(transactions.transactionDate, toSqliteTimestamp(endDate))
-            ));
+            .where(
+                and(
+                    eq(transactions.type, 'INCOME'),
+                    gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
+                    lte(transactions.transactionDate, toSqliteTimestamp(endDate)),
+                ),
+            );
         return Number(res[0]?.total ?? 0);
     }
 
     async getExpenses(startDate: Date, endDate: Date): Promise<number> {
-        const res = await db.select({ total: sum(transactions.amount) })
+        const res = await db
+            .select({ total: sum(transactions.amount) })
             .from(transactions)
-            .where(and(
-                eq(transactions.type, 'EXPENSE'),
-                gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
-                lte(transactions.transactionDate, toSqliteTimestamp(endDate))
-            ));
+            .where(
+                and(
+                    eq(transactions.type, 'EXPENSE'),
+                    gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
+                    lte(transactions.transactionDate, toSqliteTimestamp(endDate)),
+                ),
+            );
         // Expenses are stored as negative, return absolute value
         return Math.abs(Number(res[0]?.total ?? 0));
+    }
+
+    async getTransactionsInRange(startDate: Date, endDate: Date): Promise<Transaction[]> {
+        const result = await db.query.transactions.findMany({
+            where: and(
+                gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
+                lte(transactions.transactionDate, toSqliteTimestamp(endDate)),
+            ),
+            orderBy: [desc(transactions.transactionDate)],
+            with: {
+                transactionTags: true,
+            },
+        });
+
+        return result.map((t) => ({
+            ...t,
+            amount: Math.abs(t.amount),
+            transactionDate: fromSqliteTimestamp(t.transactionDate),
+            tags: t.transactionTags.map((tt) => tt.tagName),
+        }));
+    }
+
+    async getExpensesByTag(startDate: Date, endDate: Date): Promise<{ tagName: string; total: number }[]> {
+        const res = await db
+            .select({
+                tagName: transactionTags.tagName,
+                total: sum(transactions.amount),
+            })
+            .from(transactions)
+            .innerJoin(transactionTags, eq(transactions.id, transactionTags.transactionId))
+            .where(
+                and(
+                    eq(transactions.type, 'EXPENSE'),
+                    gte(transactions.transactionDate, toSqliteTimestamp(startDate)),
+                    lte(transactions.transactionDate, toSqliteTimestamp(endDate)),
+                ),
+            )
+            .groupBy(transactionTags.tagName);
+
+        return res
+            .map((r) => ({
+                tagName: r.tagName,
+                total: Math.abs(Number(r.total ?? 0)),
+            }))
+            .sort((a, b) => b.total - a.total);
     }
 }

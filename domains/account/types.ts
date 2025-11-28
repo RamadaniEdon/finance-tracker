@@ -1,4 +1,4 @@
-import z from "zod";
-import { accountSchema } from "./factory";
+import z from 'zod';
+import { accountSchema } from './factory';
 
 export type Account = z.infer<typeof accountSchema>;

@@ -37,20 +37,18 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
             const result = await getTransactionsUseCase(repository, { page, limit: LIMIT });
 
             set((state) => {
-                const newTransactions = page === 1
-                    ? result.data
-                    : [...state.transactions, ...result.data];
+                const newTransactions = page === 1 ? result.data : [...state.transactions, ...result.data];
 
                 // Update cache with fetched transactions
                 const newCache = new Map(state.cache);
-                result.data.forEach(t => newCache.set(t.id, t));
+                result.data.forEach((t) => newCache.set(t.id, t));
 
                 return {
                     transactions: newTransactions,
                     page: result.currentPage,
                     hasMore: result.currentPage < result.totalPages,
                     loading: false,
-                    cache: newCache
+                    cache: newCache,
                 };
             });
         } catch (error) {
@@ -83,11 +81,12 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
         }
     },
 
-    reset: () => set({
-        transactions: [],
-        page: 1,
-        hasMore: true,
-        loading: false,
-        error: null
-    })
+    reset: () =>
+        set({
+            transactions: [],
+            page: 1,
+            hasMore: true,
+            loading: false,
+            error: null,
+        }),
 }));

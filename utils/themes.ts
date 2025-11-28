@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Platform } from 'react-native';
 
 const WEB_FONT_STACK =
     'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
@@ -67,11 +67,11 @@ export const LightTheme = {
         background: '#ffffff',
         foreground: '#000000',
         expense: '#ef4444', // Red-500
-        income: '#22c55e',  // Green-500
-        card: '#f3f4f6',    // Gray-100
-        text: '#1f2937',    // Gray-800
+        income: '#22c55e', // Green-500
+        card: '#f3f4f6', // Gray-100
+        text: '#1f2937', // Gray-800
         subtext: '#6b7280', // Gray-500
-        border: '#e5e7eb',  // Gray-200
+        border: '#e5e7eb', // Gray-200
         notification: '#f59e0b', // Amber-500
     },
     fonts: SharedFonts,
@@ -84,11 +84,11 @@ export const DarkTheme = {
         background: '#000000',
         foreground: '#ffffff',
         expense: '#f87171', // Red-400
-        income: '#4ade80',  // Green-400
-        card: '#1f2937',    // Gray-800
-        text: '#f9fafb',    // Gray-50
+        income: '#4ade80', // Green-400
+        card: '#1f2937', // Gray-800
+        text: '#f9fafb', // Gray-50
         subtext: '#9ca3af', // Gray-400
-        border: '#374151',  // Gray-700
+        border: '#374151', // Gray-700
         notification: '#fbbf24', // Amber-400
     },
     fonts: SharedFonts,

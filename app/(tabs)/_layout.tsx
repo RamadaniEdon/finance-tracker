@@ -28,9 +28,15 @@ export default function TabLayout() {
                 name="home"
                 options={{
                     title: t.tabs.home,
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" size={size} color={color} />
-                    ),
+                    tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+                }}
+            />
+
+            <Tabs.Screen
+                name="analytics"
+                options={{
+                    title: t.tabs.analytics,
+                    tabBarIcon: ({ color, size }) => <Ionicons name="bar-chart" size={size} color={color} />,
                 }}
             />
 
@@ -56,9 +62,7 @@ export default function TabLayout() {
                 name="profile"
                 options={{
                     title: t.tabs.profile,
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person" size={size} color={color} />
-                    ),
+                    tabBarIcon: ({ color, size }) => <Ionicons name="person" size={size} color={color} />,
                 }}
             />
         </Tabs>

@@ -21,10 +21,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction })
     });
 
     return (
-        <Pressable
-            onPress={() => router.push(`/transaction/${transaction.id}`)}
-            className="mb-3 mx-4"
-        >
+        <Pressable onPress={() => router.push(`/transaction/${transaction.id}`)} className="mb-3 mx-4">
             <View
                 className="p-4 rounded-2xl flex-row items-center justify-between shadow-sm"
                 style={{ backgroundColor: theme.colors.card }}
@@ -32,12 +29,11 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction })
                 <View className="flex-row items-center flex-1">
                     <View
                         className="w-12 h-12 rounded-full items-center justify-center mr-4"
-                        style={{ backgroundColor: isExpense ? `${theme.colors.expense}20` : `${theme.colors.income}20` }}
+                        style={{
+                            backgroundColor: isExpense ? `${theme.colors.expense}20` : `${theme.colors.income}20`,
+                        }}
                     >
-                        <Text
-                            className="text-xl font-bold"
-                            style={{ color: amountColor }}
-                        >
+                        <Text className="text-xl font-bold" style={{ color: amountColor }}>
                             {transaction.description.charAt(0).toUpperCase()}
                         </Text>
                     </View>
@@ -51,21 +47,12 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction })
                             {transaction.description}
                         </Text>
                         <View className="flex-row items-center flex-wrap">
-                            <Text
-                                className="text-xs mr-2"
-                                style={{ color: theme.colors.subtext }}
-                            >
+                            <Text className="text-xs mr-2" style={{ color: theme.colors.subtext }}>
                                 {formattedDate}
                             </Text>
                             {transaction.tags.slice(0, 2).map((tag, index) => (
-                                <View
-                                    key={index}
-                                    className="px-2 py-0.5 rounded-full mr-1 bg-black/5 dark:bg-white/10"
-                                >
-                                    <Text
-                                        className="text-[10px]"
-                                        style={{ color: theme.colors.subtext }}
-                                    >
+                                <View key={index} className="px-2 py-0.5 rounded-full mr-1 bg-black/5 dark:bg-white/10">
+                                    <Text className="text-[10px]" style={{ color: theme.colors.subtext }}>
                                         #{tag}
                                     </Text>
                                 </View>
@@ -74,10 +61,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction })
                     </View>
                 </View>
 
-                <Text
-                    className="text-lg font-bold"
-                    style={{ color: amountColor }}
-                >
+                <Text className="text-lg font-bold" style={{ color: amountColor }}>
                     {sign}${transaction.amount.toFixed(2)}
                 </Text>
             </View>

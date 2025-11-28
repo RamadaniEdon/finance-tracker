@@ -2,9 +2,7 @@ import { Transaction } from '@/domains/transactions/types';
 import { createTransaction } from '@/domains/transactions/factory';
 import { DrizzleTransactionRepository } from '@/repositories/transactions/implementation';
 
-export async function createTransactionUseCase(
-    data: unknown
-): Promise<Transaction> {
+export async function createTransactionUseCase(data: unknown): Promise<Transaction> {
     const newTransactionData = createTransaction(data);
     const repository = new DrizzleTransactionRepository();
 
@@ -15,7 +13,7 @@ export async function createTransactionUseCase(
     const existingTags = await repository.getExistingTags(uniqueTags);
 
     // 3. Filter out existing tags to find new ones
-    const newTags = uniqueTags.filter(tag => !existingTags.includes(tag));
+    const newTags = uniqueTags.filter((tag) => !existingTags.includes(tag));
 
     // 4. Create missing tags
     await repository.createTags(newTags);

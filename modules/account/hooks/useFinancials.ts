@@ -3,13 +3,7 @@ import { useFinancialsStore } from '../store/useFinancialsStore';
 import { useTransactions } from '@/modules/transactions/hooks/useTransactions';
 
 export function useFinancials() {
-    const {
-        currentPeriod,
-        previousPeriod,
-        loading,
-        error,
-        fetchFinancials
-    } = useFinancialsStore();
+    const { currentPeriod, previousPeriod, loading, error, fetchFinancials } = useFinancialsStore();
 
     // We watch transactions to auto-refresh financials when transactions change
     const { transactions } = useTransactions();
@@ -51,20 +45,20 @@ export function useFinancials() {
                 current: currentPeriod.balanceAtEnd,
                 previous: previousPeriod.balanceAtEnd,
                 change: calculateChange(currentPeriod.balanceAtEnd, previousPeriod.balanceAtEnd),
-                diff: currentPeriod.balanceAtEnd - previousPeriod.balanceAtEnd
+                diff: currentPeriod.balanceAtEnd - previousPeriod.balanceAtEnd,
             },
             income: {
                 current: currentPeriod.income,
                 previous: previousPeriod.income,
                 change: calculateChange(currentPeriod.income, previousPeriod.income),
-                diff: currentPeriod.income - previousPeriod.income
+                diff: currentPeriod.income - previousPeriod.income,
             },
             expenses: {
                 current: currentPeriod.expenses,
                 previous: previousPeriod.expenses,
                 change: calculateChange(currentPeriod.expenses, previousPeriod.expenses),
-                diff: currentPeriod.expenses - previousPeriod.expenses
-            }
+                diff: currentPeriod.expenses - previousPeriod.expenses,
+            },
         };
     }, [currentPeriod, previousPeriod]);
 
@@ -72,6 +66,6 @@ export function useFinancials() {
         stats,
         loading,
         error,
-        refresh
+        refresh,
     };
 }

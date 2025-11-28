@@ -7,6 +7,5 @@ const expo = SQLite.openDatabaseSync('finance-tracker.db');
 export const expoDb = expo;
 
 export const db = drizzle(expo, {
-    schema
+    schema,
 });
-

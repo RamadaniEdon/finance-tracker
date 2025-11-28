@@ -7,13 +7,7 @@ interface CardProps extends ViewProps {
     variant?: 'default' | 'primary' | 'outlined';
 }
 
-export function Card({
-    children,
-    className,
-    style,
-    variant = 'default',
-    ...props
-}: CardProps) {
+export function Card({ children, className, style, variant = 'default', ...props }: CardProps) {
     const theme = useTheme();
 
     const getBackgroundColor = () => {
@@ -29,14 +23,11 @@ export function Card({
     return (
         <View
             className={cn(
-                "p-4 rounded-2xl shadow-sm",
-                variant === 'outlined' && "border border-border bg-transparent",
-                className
+                'p-4 rounded-2xl shadow-sm',
+                variant === 'outlined' && 'border border-border bg-transparent',
+                className,
             )}
-            style={[
-                variant !== 'outlined' && { backgroundColor: getBackgroundColor() },
-                style
-            ]}
+            style={[variant !== 'outlined' && { backgroundColor: getBackgroundColor() }, style]}
             {...props}
         >
             {children}

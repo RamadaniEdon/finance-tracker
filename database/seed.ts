@@ -17,7 +17,7 @@ export async function seedDatabase() {
 
         // 2. Create Tags
         console.log('Creating tags...');
-        await db.insert(tags).values(TAGS.map(name => ({ name })));
+        await db.insert(tags).values(TAGS.map((name) => ({ name })));
 
         // 3. Create Transactions
         console.log('Creating transactions...');
@@ -35,9 +35,7 @@ export async function seedDatabase() {
             const amount = parseFloat(faker.finance.amount({ min: 10, max: 1000, dec: 2 }));
             const finalAmount = isExpense ? -amount : amount;
 
-            const description = isExpense
-                ? faker.commerce.productName()
-                : 'Salary or Income';
+            const description = isExpense ? faker.commerce.productName() : 'Salary or Income';
 
             newTransactions.push({
                 id,
@@ -51,16 +49,16 @@ export async function seedDatabase() {
             const numTags = faker.number.int({ min: 1, max: 3 });
             const selectedTags = faker.helpers.arrayElements(TAGS, numTags);
 
-            selectedTags.forEach(tagName => {
+            selectedTags.forEach((tagName) => {
                 newTransactionTags.push({
                     transactionId: id,
-                    tagName
+                    tagName,
                 });
             });
         }
 
         // Batch insert transactions
-        // SQLite has limits on variables, so we might need to chunk if it was huge, 
+        // SQLite has limits on variables, so we might need to chunk if it was huge,
         // but 50 is fine.
         await db.insert(transactions).values(newTransactions);
 

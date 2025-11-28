@@ -7,6 +7,6 @@ export function useTranslations() {
         languageChoice,
         translations: translations as NonNullable<typeof translations>,
         t: translations as NonNullable<typeof translations>,
-        setLanguageChoice
+        setLanguageChoice,
     };
 }

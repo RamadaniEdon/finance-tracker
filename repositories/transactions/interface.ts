@@ -24,4 +24,6 @@ export interface TransactionRepository {
     getBalance(until?: Date): Promise<number>;
     getIncome(startDate: Date, endDate: Date): Promise<number>;
     getExpenses(startDate: Date, endDate: Date): Promise<number>;
+    getTransactionsInRange(startDate: Date, endDate: Date): Promise<Transaction[]>;
+    getExpensesByTag(startDate: Date, endDate: Date): Promise<{ tagName: string; total: number }[]>;
 }

@@ -54,7 +54,8 @@
     },
     "tabs": {
         "home": "Home",
-        "create": "Create Transaction",
+        "analytics": "Analytics",
+        "create": "Create",
         "profile": "Profile"
     },
     "home": {

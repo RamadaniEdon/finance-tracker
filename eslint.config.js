@@ -23,5 +23,8 @@ module.exports = defineConfig([
       'metro.config.js',
       'tailwind.config.js',
     ],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+    },
   },
 ]);

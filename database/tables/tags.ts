@@ -3,15 +3,13 @@ import { relations, sql } from 'drizzle-orm';
 import { transactionTags } from './transactionTags';
 
 export const tags = sqliteTable('tags', {
-    name: text('name')
-        .primaryKey()
-        .notNull(),
+    name: text('name').primaryKey().notNull(),
     createdAt: text('created_at')
         .notNull()
         .default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text('updated_at')
         .notNull()
-        .default(sql`CURRENT_TIMESTAMP`)
+        .default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const tagsRelations = relations(tags, ({ many }) => ({

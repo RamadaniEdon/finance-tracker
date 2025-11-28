@@ -25,14 +25,9 @@ export const FinancialSummaryCard = () => {
     return (
         <View className="mx-4 mt-4 mb-2">
             {/* Balance Card */}
-            <Card
-                variant="primary"
-                className="p-6 rounded-3xl mb-4"
-            >
+            <Card variant="primary" className="p-6 rounded-3xl mb-4">
                 <Text className="text-white/80 text-sm font-medium mb-1">{t.account.total_balance}</Text>
-                <Text className="text-white text-3xl font-bold mb-4">
-                    ${stats.balance.current.toFixed(2)}
-                </Text>
+                <Text className="text-white text-3xl font-bold mb-4">${stats.balance.current.toFixed(2)}</Text>
                 <View className="flex-row items-center justify-between">
                     <Text className="text-white/60 text-xs">
                         {t.account.vs_last_month} (${stats.balance.previous.toFixed(2)})
@@ -52,16 +47,10 @@ export const FinancialSummaryCard = () => {
                         </View>
                         <TrendIndicator change={stats.income.change} diff={stats.income.diff} />
                     </View>
-                    <Text
-                        className="text-xs mb-1"
-                        style={{ color: theme.colors.subtext }}
-                    >
+                    <Text className="text-xs mb-1" style={{ color: theme.colors.subtext }}>
                         {t.account.income}
                     </Text>
-                    <Text
-                        className="text-lg font-bold"
-                        style={{ color: theme.colors.text }}
-                    >
+                    <Text className="text-lg font-bold" style={{ color: theme.colors.text }}>
                         ${stats.income.current.toFixed(2)}
                     </Text>
                 </Card>
@@ -75,16 +64,10 @@ export const FinancialSummaryCard = () => {
                         {/* Inverse logic for expenses */}
                         <TrendIndicator change={stats.expenses.change} diff={stats.expenses.diff} inverse />
                     </View>
-                    <Text
-                        className="text-xs mb-1"
-                        style={{ color: theme.colors.subtext }}
-                    >
+                    <Text className="text-xs mb-1" style={{ color: theme.colors.subtext }}>
                         {t.account.expenses}
                     </Text>
-                    <Text
-                        className="text-lg font-bold"
-                        style={{ color: theme.colors.text }}
-                    >
+                    <Text className="text-lg font-bold" style={{ color: theme.colors.text }}>
                         ${stats.expenses.current.toFixed(2)}
                     </Text>
                 </Card>

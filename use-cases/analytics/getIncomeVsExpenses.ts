@@ -1,23 +1,25 @@
 import { DrizzleTransactionRepository } from '@/repositories/transactions/implementation';
 
-export interface PeriodFinancials {
+export interface IncomeVsExpenses {
     income: number;
     expenses: number;
-    balanceAtEnd: number;
+    savingsRate: number;
 }
 
-export async function getPeriodFinancialsUseCase(startDate: Date, endDate: Date): Promise<PeriodFinancials> {
+export async function getIncomeVsExpensesUseCase(startDate: Date, endDate: Date): Promise<IncomeVsExpenses> {
     const repository = new DrizzleTransactionRepository();
 
-    const [income, expenses, balanceAtEnd] = await Promise.all([
+    const [income, expenses] = await Promise.all([
         repository.getIncome(startDate, endDate),
         repository.getExpenses(startDate, endDate),
-        repository.getBalance(endDate),
     ]);
+
+    const total = income;
+    const savingsRate = total > 0 ? ((income - expenses) / total) * 100 : 0;
 
     return {
         income,
         expenses,
-        balanceAtEnd,
+        savingsRate,
     };
 }
