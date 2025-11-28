@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, Platform, Modal } from 'react-native';
+import { View, Text, Pressable, Platform } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/hooks/useTheme';
-import { cn } from '@/utils/cn';
-
 import { useTranslations } from '@/hooks/useTranslations';
 
 interface CustomDateTimePickerProps {
     date: Date;
     onChange: (date: Date) => void;
+    label?: string;
 }
 
-export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerProps) {
+export function CustomDateTimePicker({ date, onChange, label }: CustomDateTimePickerProps) {
     const theme = useTheme();
     const { t } = useTranslations();
     const [showPicker, setShowPicker] = useState(false);
@@ -47,7 +46,7 @@ export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerPro
 
     return (
         <View className="mb-6">
-            <Text className="text-subtext mb-2 font-medium">{t.common.date}</Text>
+            <Text className="text-subtext mb-2 font-medium">{label || t.common.date}</Text>
             <Pressable
                 onPress={togglePicker}
                 className="bg-card flex-row items-center justify-between p-4 rounded-2xl border border-border"
@@ -58,7 +57,6 @@ export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerPro
                         {isToday(date) ? t.common.today : formatDate(date)}
                     </Text>
                 </View>
-                {/* Show different icon based on state if needed, or just chevron */}
                 <Ionicons name="chevron-down" size={20} color={theme.colors.subtext} />
             </Pressable>
 
@@ -77,7 +75,6 @@ export function CustomDateTimePicker({ date, onChange }: CustomDateTimePickerPro
             {Platform.OS === 'ios' && showPicker && (
                 <View className="mt-2 rounded-2xl overflow-hidden items-center w-full">
                     <DateTimePicker
-                        className=""
                         testID="dateTimePicker"
                         value={date}
                         mode="date"

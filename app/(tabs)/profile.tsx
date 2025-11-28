@@ -1,9 +1,10 @@
-import { View, Text, Button, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/hooks/useTheme';
 import { seedDatabase } from '@/database/seed';
 import { useTransactions } from '@/modules/transactions/hooks/useTransactions';
 import { useTranslations } from '@/hooks/useTranslations';
+import { Button } from '@/components/Button';
 
 export default function Profile() {
     const theme = useTheme();
@@ -49,15 +50,13 @@ export default function Profile() {
                 </Text>
 
                 <View className="w-full max-w-xs mb-8">
-                    <TouchableOpacity
+                    <Button
+                        title={t.profile.language_toggle}
                         onPress={toggleLanguage}
-                        className="py-3 rounded-xl items-center mb-2"
-                        style={{ backgroundColor: theme.colors.primary }}
-                    >
-                        <Text className="text-white font-semibold text-lg">
-                            {t.profile.language_toggle}
-                        </Text>
-                    </TouchableOpacity>
+                        variant="primary"
+                        size="lg"
+                        className="mb-2"
+                    />
                     <Text
                         className="text-sm text-center"
                         style={{ color: theme.colors.subtext }}
@@ -69,8 +68,9 @@ export default function Profile() {
                 <View className="w-full max-w-xs">
                     <Button
                         title={t.profile.seed_db}
-                        color={theme.colors.expense}
                         onPress={handleSeed}
+                        variant="danger"
+                        size="lg"
                     />
                     <Text
                         className="text-xs text-center mt-2"

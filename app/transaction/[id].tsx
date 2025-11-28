@@ -7,6 +7,8 @@ import { useTransactions } from '@/modules/transactions/hooks/useTransactions';
 import { Transaction } from '@/domains/transactions/types';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslations } from '@/hooks/useTranslations';
+import { Card } from '@/components/Card';
+import { Badge } from '@/components/Badge';
 
 export default function TransactionDetails() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -82,10 +84,7 @@ export default function TransactionDetails() {
 
             <ScrollView className="flex-1 px-4 pt-6">
                 {/* Amount Card */}
-                <View
-                    className="items-center justify-center py-10 rounded-3xl mb-6 shadow-sm"
-                    style={{ backgroundColor: theme.colors.card }}
-                >
+                <Card className="items-center justify-center py-10 rounded-3xl mb-6">
                     <View
                         className="w-16 h-16 rounded-full items-center justify-center mb-4"
                         style={{ backgroundColor: isExpense ? `${theme.colors.expense}20` : `${theme.colors.income}20` }}
@@ -108,7 +107,7 @@ export default function TransactionDetails() {
                     >
                         {transaction.description}
                     </Text>
-                </View>
+                </Card>
 
                 {/* Details Section */}
                 <View className="space-y-6">
@@ -117,16 +116,13 @@ export default function TransactionDetails() {
                         <Text className="text-sm font-medium mb-2" style={{ color: theme.colors.subtext }}>
                             {t.transactions.details.date_time}
                         </Text>
-                        <View
-                            className="p-4 rounded-2xl flex-row items-center justify-between"
-                            style={{ backgroundColor: theme.colors.card }}
-                        >
+                        <Card className="flex-row items-center justify-between">
                             <View className="flex-row items-center">
                                 <Ionicons name="calendar-outline" size={20} color={theme.colors.text} className="mr-3" />
                                 <Text style={{ color: theme.colors.text }}>{formattedDate}</Text>
                             </View>
                             <Text style={{ color: theme.colors.subtext }}>{formattedTime}</Text>
-                        </View>
+                        </Card>
                     </View>
 
                     {/* Type */}
@@ -134,10 +130,7 @@ export default function TransactionDetails() {
                         <Text className="text-sm font-medium mb-2" style={{ color: theme.colors.subtext }}>
                             {t.transactions.details.type}
                         </Text>
-                        <View
-                            className="p-4 rounded-2xl flex-row items-center"
-                            style={{ backgroundColor: theme.colors.card }}
-                        >
+                        <Card className="flex-row items-center">
                             <Ionicons
                                 name={isExpense ? "trending-down" : "trending-up"}
                                 size={20}
@@ -147,7 +140,7 @@ export default function TransactionDetails() {
                             <Text className="font-medium" style={{ color: amountColor }}>
                                 {transaction.type}
                             </Text>
-                        </View>
+                        </Card>
                     </View>
 
                     {/* Tags */}
@@ -157,13 +150,10 @@ export default function TransactionDetails() {
                         </Text>
                         <View className="flex-row flex-wrap gap-2">
                             {transaction.tags.map((tag, index) => (
-                                <View
+                                <Badge
                                     key={index}
-                                    className="px-4 py-2 rounded-full"
-                                    style={{ backgroundColor: theme.colors.card }}
-                                >
-                                    <Text style={{ color: theme.colors.text }}>#{tag}</Text>
-                                </View>
+                                    label={`#${tag}`}
+                                />
                             ))}
                         </View>
                     </View>

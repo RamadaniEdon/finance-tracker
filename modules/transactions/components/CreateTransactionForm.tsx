@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { CreateTransaction, TransactionType } from '@/domains/transactions/types';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,7 +7,10 @@ import { cn } from '@/utils/cn';
 import { useRouter } from 'expo-router';
 import { useCreateTransaction } from '../hooks/useCreateTransaction';
 import { useTranslations } from '@/hooks/useTranslations';
-import { CustomDateTimePicker } from './DateTimePicker';
+import { CustomDateTimePicker } from '@/components/DateTimePicker';
+import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
+import { Badge } from '@/components/Badge';
 
 export function CreateTransactionForm() {
     const theme = useTheme();
@@ -106,30 +109,23 @@ export function CreateTransactionForm() {
             <CustomDateTimePicker date={date} onChange={setDate} />
 
             {/* Description */}
-            <View className="mb-6">
-                <Text className="text-subtext mb-2 font-medium">{t.transactions.create.description}</Text>
-                <TextInput
-                    className="bg-card text-foreground p-4 rounded-2xl text-lg"
-                    value={description}
-                    onChangeText={setDescription}
-                    placeholder={t.transactions.create.description_placeholder}
-                    placeholderTextColor={theme.colors.text}
-                />
-            </View>
+            <Input
+                label={t.transactions.create.description}
+                value={description}
+                onChangeText={setDescription}
+                placeholder={t.transactions.create.description_placeholder}
+            />
 
             {/* Tags */}
             <View className="mb-6">
                 <Text className="text-subtext mb-2 font-medium">{t.transactions.create.tags}</Text>
                 <View className="flex-row flex-wrap gap-2 mb-3">
                     {tags.map(tag => (
-                        <Pressable
+                        <Badge
                             key={tag}
-                            onPress={() => removeTag(tag)}
-                            className="bg-card px-3 py-1 rounded-full flex-row items-center border border-border"
-                        >
-                            <Text className="text-foreground mr-1">#{tag}</Text>
-                            <Ionicons name="close-circle" size={16} color={theme.colors.text} />
-                        </Pressable>
+                            label={`#${tag}`}
+                            onRemove={() => removeTag(tag)}
+                        />
                     ))}
                 </View>
                 <View className="flex-row items-center bg-card rounded-2xl px-4">
@@ -150,25 +146,15 @@ export function CreateTransactionForm() {
             </View>
 
             {/* Submit Button */}
-            <Pressable
-                className={cn(
-                    "py-4 rounded-2xl items-center shadow-lg mt-4",
-                    isSuccess ? "bg-green-500" : "bg-primary"
-                )}
+            <Button
+                title={isSuccess ? t.transactions.create.success : t.transactions.create.save}
                 onPress={handleCreateTransaction}
-                disabled={loading || isSuccess}
-            >
-                {loading ? (
-                    <ActivityIndicator color="white" />
-                ) : isSuccess ? (
-                    <View className="flex-row items-center">
-                        <Ionicons name="checkmark-circle" size={24} color="white" className="mr-2" />
-                        <Text className="text-white font-bold text-xl ml-2">{t.transactions.create.success}</Text>
-                    </View>
-                ) : (
-                    <Text className="text-white font-bold text-xl">{t.transactions.create.save}</Text>
-                )}
-            </Pressable>
+                loading={loading}
+                disabled={isSuccess}
+                variant={isSuccess ? 'success' : 'primary'}
+                icon={isSuccess ? 'checkmark-circle' : undefined}
+                className="mt-4"
+            />
         </ScrollView>
     );
 }
