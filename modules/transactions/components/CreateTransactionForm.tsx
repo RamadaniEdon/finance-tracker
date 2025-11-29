@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { CreateTransaction, TransactionType } from '@/domains/transactions/types';

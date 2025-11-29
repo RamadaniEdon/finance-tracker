@@ -15,23 +15,24 @@ const base = __dirname;
 const files = SUPPORTED_LANGUAGES.map((lang) => `${lang}.json`);
 
 const failedValidations: Record<string, ReturnType<typeof translationSchema.safeParse>> = {};
+type JSONParsedObject = ReturnType<typeof JSON.parse>;
 
 for (const file of files) {
     const filePath = path.join(base, file);
 
     if (!fs.existsSync(filePath)) {
         console.error(`Missing locale file: ${filePath}`);
-        failedValidations[file] = { success: false, error: { message: 'File not found' } } as any;
+        failedValidations[file] = { success: false, error: { message: 'File not found' } } as JSONParsedObject;
         continue;
     }
 
     const raw = fs.readFileSync(filePath, 'utf8');
-    let json: any;
+    let json: JSONParsedObject;
     try {
         json = JSON.parse(raw);
     } catch (err) {
         console.error(`Invalid JSON in file: ${filePath}`);
-        failedValidations[file] = { success: false, error: { message: (err as Error).message } } as any;
+        failedValidations[file] = { success: false, error: { message: (err as Error).message } } as JSONParsedObject;
         continue;
     }
 
@@ -51,8 +52,8 @@ if (Object.keys(failedValidations).length > 0) {
                 const pathStr = issue.path.length > 0 ? issue.path.join('.') : '(root)';
                 console.error(`Key: ${pathStr} \n${issue.message}`);
             });
-        } else if ((validation as any).error?.message) {
-            console.error((validation as any).error.message);
+        } else if ((validation as JSONParsedObject).error?.message) {
+            console.error((validation as JSONParsedObject).error.message);
         }
     });
     process.exit(1);

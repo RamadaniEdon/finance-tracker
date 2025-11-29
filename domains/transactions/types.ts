@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 import { transactionSchema } from './factory';
 
 export type CreateTransaction = z.infer<typeof transactionSchema>;

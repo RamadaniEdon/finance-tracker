@@ -2,17 +2,28 @@
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+const typescriptESLint = require('@typescript-eslint/eslint-plugin');
+const typescriptESLintParser = require('@typescript-eslint/parser');
 
 module.exports = defineConfig([
   expoConfig,
   eslintPluginPrettierRecommended,
   {
+    plugins: {
+      '@typescript-eslint': typescriptESLint,
+    },
+    languageOptions: {
+      parser: typescriptESLintParser,
+      parserOptions: {
+        project: true,
+      },
+    },
     ignores: [
       'dist/*',
-      '.expo/*',
-      '.vscode/*',
-      'assets/*',
-      'node_modules/*',
+      '.expo/**',
+      '.vscode/**',
+      'assets/**',
+      'node_modules/**',
       '*.config.js',
       '*.d.ts',
       '*.css',
@@ -25,6 +36,12 @@ module.exports = defineConfig([
     ],
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
+      'max-len': [
+        'error',
+        {
+          code: 120,
+        },
+      ]
     },
   },
 ]);

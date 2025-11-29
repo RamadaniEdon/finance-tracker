@@ -24,15 +24,20 @@ export async function seedDatabase() {
         const newTransactions: NewTransaction[] = [];
         const newTransactionTags: NewTransactionTag[] = [];
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 365; i++) {
             const id = Crypto.randomUUID();
-            const isExpense = faker.datatype.boolean();
+            // 70% chance of expense, 30% income for more realistic data
+            const isExpense = Math.random() > 0.3;
             const type = isExpense ? 'EXPENSE' : 'INCOME';
 
-            // Generate a date within the last 50 days
-            const date = faker.date.recent({ days: 50 });
+            // Generate a date for each specific day in the past year
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            // Add some random time
+            date.setHours(faker.number.int({ min: 8, max: 22 }));
+            date.setMinutes(faker.number.int({ min: 0, max: 59 }));
 
-            const amount = parseFloat(faker.finance.amount({ min: 10, max: 1000, dec: 2 }));
+            const amount = parseFloat(faker.finance.amount({ min: 10, max: isExpense ? 200 : 2000, dec: 2 }));
             const finalAmount = isExpense ? -amount : amount;
 
             const description = isExpense ? faker.commerce.productName() : 'Salary or Income';

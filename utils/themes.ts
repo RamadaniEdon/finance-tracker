@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 
-const WEB_FONT_STACK =
-    'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+const WEB_FONT_STACK = `system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 
 const SharedFonts = Platform.select({
     web: {

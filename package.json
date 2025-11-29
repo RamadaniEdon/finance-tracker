@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "lint:fix": "expo lint --fix",
+    "lint:eslint": "eslint .",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "validate:translations": "dotenv -e .env tsx localization/validate.ts"
@@ -59,6 +60,8 @@
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
     "@types/react": "~19.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
     "dotenv-cli": "^11.0.0",
     "drizzle-kit": "^0.31.7",
     "eslint": "^9.25.0",

@@ -28,7 +28,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     cache: new Map(),
 
     fetchTransactions: async (page = 1) => {
-        const { loading, hasMore, transactions } = get();
+        const { loading, hasMore } = get();
         if (loading || (!hasMore && page !== 1)) return;
 
         set({ loading: true, error: null });
@@ -52,6 +52,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
                 };
             });
         } catch (error) {
+            console.error(error);
             set({ loading: false, error: 'Failed to fetch transactions' });
         }
     },
@@ -76,6 +77,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
             }
             return transaction;
         } catch (error) {
+            console.error(error);
             set({ loading: false, error: 'Failed to fetch transaction details' });
             return null;
         }

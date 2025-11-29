@@ -6,7 +6,7 @@ import migrations from '@/database/drizzle/migrations';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
 export function useAppSetup() {
-    const { success, error } = useMigrations(db, migrations);
+    useMigrations(db, migrations);
     useDrizzleStudio(expoDb);
     useSyncTheme();
     const { ready } = useInitializeTranslation();

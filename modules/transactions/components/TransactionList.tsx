@@ -1,4 +1,4 @@
-import React from 'react';
+import { ComponentProps } from 'react';
 import { FlatList, View, Text, ActivityIndicator, RefreshControl } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { useTransactions } from '../hooks/useTransactions';
@@ -7,13 +7,13 @@ import { TransactionItem } from './TransactionItem';
 import { useTranslations } from '@/hooks/useTranslations';
 
 interface TransactionListProps {
-    ListHeaderComponent?: React.ComponentType<any> | React.ReactElement | null;
+    ListHeaderComponent?: ComponentProps<typeof FlatList>['ListHeaderComponent'];
 }
 
 export const TransactionList: React.FC<TransactionListProps> = ({ ListHeaderComponent }) => {
     const theme = useTheme();
     const { t } = useTranslations();
-    const { transactions, loading, hasMore, loadMore, refresh } = useTransactions();
+    const { transactions, loading, loadMore, refresh, refreshing } = useTransactions();
 
     const renderFooter = () => {
         if (!loading) return <View className="h-20" />;
@@ -62,7 +62,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({ ListHeaderComp
             showsVerticalScrollIndicator={false}
             refreshControl={
                 <RefreshControl
-                    refreshing={loading && transactions.length === 0}
+                    refreshing={refreshing}
                     onRefresh={refresh}
                     tintColor={theme.colors.primary}
                     colors={[theme.colors.primary]}

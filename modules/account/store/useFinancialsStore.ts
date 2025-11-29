@@ -22,7 +22,8 @@ export const useFinancialsStore = create<FinancialsState>((set) => ({
                 getPeriodFinancialsUseCase(previousStart, previousEnd),
             ]);
             set({ currentPeriod, previousPeriod, loading: false });
-        } catch (error) {
+        } catch (e) {
+            console.error(e);
             set({ error: 'Failed to fetch financials', loading: false });
         }
     },
